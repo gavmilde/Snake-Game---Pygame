@@ -1,4 +1,3 @@
-# importing libraries
 import pygame
 import time
 import random
@@ -9,20 +8,13 @@ snake_speed = 15
 window_x = 720
 window_y = 480
 
-# load fruit image
+# Define the size of the visible fruit and hitbox
+fruit_size = 25
+fruit_hitbox_size = 25
 
-
-
-fruit_size = 20
-
-fruit_hitbox_size = 30
-
+# Load the fruit image
 fruit = pygame.image.load("/Users/hamid/Documents/GitHub/Snake-Game---Pygame/Snake Game/—Pngtree—summer cartoon fruit apple png_3939961.png")
-
-fruit = pygame.transform.scale(fruit, (20, 20))
-
-
-
+fruit = pygame.transform.scale(fruit, (fruit_size, fruit_size))  # Resize the fruit image
 
 # defining colors
 black = pygame.Color(0, 0, 0)
@@ -37,7 +29,6 @@ pygame.init()
 # Initialise game window
 pygame.display.set_caption('Snake Game')
 game_window = pygame.display.set_mode((window_x, window_y))
-
 
 # FPS (frames per second) controller
 fps = pygame.time.Clock()
@@ -155,7 +146,8 @@ while True:
 	# if fruits and snakes collide then scores
 	# will be incremented by 10
 	snake_body.insert(0, list(snake_position))
-	if snake_position[0] == fruit_position[0] and snake_position[1] == fruit_position[1]:
+	if (fruit_position[0] <= snake_position[0] < fruit_position[0] + fruit_hitbox_size and
+		fruit_position[1] <= snake_position[1] < fruit_position[1] + fruit_hitbox_size):
 		score += 10
 		fruit_spawn = False
 	else:
@@ -172,11 +164,6 @@ while True:
 		pygame.draw.rect(game_window, green,
 						pygame.Rect(pos[0], pos[1], 10, 10))
 	game_window.blit(fruit, (fruit_position[0], fruit_position[1]))
-
- 
-	
- 
- 
 
 	# Game Over conditions
 	if snake_position[0] < 0 or snake_position[0] > window_x-10:
